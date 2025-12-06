@@ -1,18 +1,7 @@
 package main
 
-// 4614
-// Not 4890 too low
-// Not 5175
-// Not 5454
-// Not 5625 (must be close)
-// Not 5766
-// Not 6478
-// Not 7371 too high
-// 8503
-
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"log"
 	"math"
@@ -21,206 +10,134 @@ import (
 	"strings"
 )
 
-func main() {
-	file, err := os.Open("input.txt")
-	if err != nil {
-		log.Fatal(err)
-		return
+type Direction = uint8
+
+const DIRECTION_LEFT = Direction(0)
+const DIRECTION_RIGHT = Direction(1)
+
+type DialTranslation struct {
+	Direction      Direction
+	Distance       int
+	SignedDistance int
+}
+
+func (self *DialTranslation) IsLeft() bool {
+	return self.Direction == DIRECTION_LEFT
+}
+
+func (self *DialTranslation) IsRight() bool {
+	return self.Direction == DIRECTION_RIGHT
+}
+
+func (self *DialTranslation) String() string {
+	if self.IsLeft() {
+		return fmt.Sprintf("LEFT:%d", self.Distance)
+	} else {
+		return fmt.Sprintf("RIGHT:%d", self.Distance)
 	}
-	defer file.Close()
+}
 
-	fmt.Println("File opened")
+func ParseDialTranslation(input string) (*DialTranslation, error) {
+	var direction Direction
+	var signedDistance int
 
-	dialValue := int(50)
-	rotationZeroCount := int(0)
-	tickZeroCount := int(0)
+	trimmedInput := strings.TrimSpace(input)
+
+	distance, err := strconv.Atoi(input[1:])
+	if err != nil {
+		return nil, fmt.Errorf("failed to convert %s into a numerical distance", input)
+	}
+
+	prefix := string(trimmedInput[0])
+	switch prefix {
+	case "L":
+		direction = DIRECTION_LEFT
+		signedDistance = -distance
+	case "R":
+		direction = DIRECTION_RIGHT
+		signedDistance = distance
+	default:
+		return nil, fmt.Errorf("Failed to convert %s into a dial-translation", input)
+	}
+
+	return &DialTranslation{
+		Direction:      direction,
+		Distance:       distance,
+		SignedDistance: signedDistance,
+	}, nil
+}
+
+type Dial struct {
+	AccumulatedPosition int
+	Position            int
+	ZeroLandings        int
+	ZeroRotations       int
+}
+
+func NewDial(startingPosition int) Dial {
+	return Dial{
+		AccumulatedPosition: startingPosition,
+		Position:            50,
+		ZeroLandings:        0,
+		ZeroRotations:       0,
+	}
+}
+
+func (self *Dial) String() string {
+	return fmt.Sprintf("%d", self.AccumulatedPosition)
+}
+
+const FULL_ROTATION = 100
+
+func (self *Dial) Translate(translation *DialTranslation) int {
+	oldPosition := self.Position
+
+	self.AccumulatedPosition += translation.SignedDistance
+	self.Position = self.AccumulatedPosition % FULL_ROTATION
+	if self.Position < 0 {
+		self.Position += FULL_ROTATION
+	}
+
+	if self.Position == 0 {
+		self.ZeroLandings++
+	}
+
+	signedPositionAfterDistance := oldPosition + translation.SignedDistance
+	zeroRotations := int(math.Abs(float64(signedPositionAfterDistance / FULL_ROTATION)))
+
+	if oldPosition != 0 && signedPositionAfterDistance <= 0 {
+		zeroRotations++
+	}
+
+	self.ZeroRotations += zeroRotations
+
+	return zeroRotations
+}
+
+func main() {
+	inputFileName := "input.txt"
+	file, err := os.Open(inputFileName)
+	if err != nil {
+		log.Fatalf("Could not open file %s", inputFileName)
+	}
+
+	dial := NewDial(50)
+	fmt.Printf("dial=%s\n", &dial)
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		if line == "" {
-			continue
+
+		dialTranslation, err := ParseDialTranslation(line)
+		if err != nil {
+			log.Fatalf("failed to parse dial-translation %e", err)
 		}
 
-		fmt.Print(line)
-		fmt.Print(": ")
+		zeroRotations := dial.Translate(dialTranslation)
 
-		isLeft, isRight, distance := DecodeLine(line)
-
-		if isLeft {
-			fmt.Printf("%d - %d", dialValue, distance)
-		} else if isRight {
-			fmt.Printf("%d + %d", dialValue, distance)
-		}
-
-		newDialValue := dialValue
-
-		if isLeft {
-			newDialValue -= distance
-		} else {
-			newDialValue += distance
-		}
-
-		tickZeroTimes := int(0)
-		// if dialValue < 0 && newDialValue > 0 {
-		// 	tickZeroTimes = int(math.Ceil(math.Abs(float64(newDialValue-dialValue) / 100)))
-		// } else if dialValue > 0 && newDialValue < 0 {
-		// 	tickZeroTimes = int(math.Ceil(math.Abs(float64(dialValue-newDialValue) / 100)))
-		// }
-		// tickZeroCount += tickZeroTimes
-		min := math.Min(float64(dialValue), float64(newDialValue))
-		max := math.Max(float64(dialValue), float64(newDialValue))
-		// // // if newDialValue%100 != 0 {
-		// // tickZeroTimes += int(math.Floor(max/100) - math.Floor(min/100))
-
-		// if min < 0 && max > 0 {
-		// 	tickZeroTimes = int(math.Ceil(math.Abs(max-min) / 100))
-		// } else {
-		// 	tickZeroTimes = int(math.Floor(max/100) - math.Floor(min/100))
-		// }
-
-		tickZeroTimes += int(math.Floor(float64(distance) / float64(100)))
-
-		// L814: 14 - 814 = 0
-		// }
-
-		if (newDialValue % 100) == 0 {
-			rotationZeroCount++
-
-			// if distance%100 != 0 {
-			// 	tickZeroTimes++
-			// }
-			// tickZeroTimes++
-		}
-
-		if ((min < 0 && max > 0) || (newDialValue%100) == 0) && tickZeroTimes == 0 {
-			tickZeroTimes++
-		}
-
-		tickZeroCount += tickZeroTimes
-
-		fmt.Printf(" = %d", newDialValue%100)
-		fmt.Printf(", %d to %d", dialValue, newDialValue)
-		// fmt.Printf(", %d to %d", int(math.Abs(float64(dialValue%100))), int(math.Abs(float64(newDialValue%100))))
-		fmt.Printf(", ticking %d zeros", tickZeroTimes)
-		fmt.Printf(", totalling %d rotational zeros", rotationZeroCount)
-		fmt.Printf(", totalling %d tick zeros", tickZeroCount)
-		fmt.Println()
-
-		dialValue = newDialValue % 100
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
+		fmt.Printf("translation=%d, dial-position=%d, total-landings=%d, zero-rotations=%d, total-rotations=%d\n", dialTranslation.SignedDistance, dial.Position, dial.ZeroLandings, zeroRotations, dial.ZeroRotations)
 	}
 }
 
-// func runTests() {
-// 	if MoveDial(50, true, false, 68) != 82 {
-// 		log.Fatal("test failed")
-// 	}
-// 	if MoveDial(82, true, false, 30) != 52 {
-// 		log.Fatal("test failed")
-// 	}
-// 	if MoveDial(52, false, true, 48) != 0 {
-// 		log.Fatal("test failed")
-// 	}
-// 	if MoveDial(0, true, false, 5) != 95 {
-// 		log.Fatal("test failed")
-// 	}
-// 	if MoveDial(95, false, true, 60) != 55 {
-// 		log.Fatal("test failed")
-// 	}
-// 	if MoveDial(55, true, false, 55) != 0 {
-// 		log.Fatal("test failed")
-// 	}
-// 	if MoveDial(0, true, false, 1) != 99 {
-// 		log.Fatal("test failed")
-// 	}
-// 	if MoveDial(99, true, false, 99) != 0 {
-// 		log.Fatal("test failed")
-// 	}
-// 	if MoveDial(0, false, true, 14) != 14 {
-// 		log.Fatal("test failed")
-// 	}
-// 	if MoveDial(14, true, false, 82) != 32 {
-// 		log.Fatal("test failed")
-// 	}
-
-// 	if MoveDial(99, true, false, 100) != 99 {
-// 		log.Fatal("test failed")
-// 	}
-// 	if MoveDial(99, false, true, 100) != 99 {
-// 		log.Fatal("test failed")
-// 	}
-
-// 	if MoveDial(99, false, true, 552) != 51 {
-// 		log.Fatal("test failed")
-// 	}
-
-// 	if MoveDial(0, true, false, 245) != 55 {
-// 		log.Fatal("test failed")
-// 	}
-
-// 	if MoveDial(0, false, true, 245) != 45 {
-// 		log.Fatal("test failed")
-// 	}
-// }
-
-// func MoveDial(currentDial int, isLeft bool, isRight bool, amount int) int {
-// 	newValue := 0
-
-// 	if isRight {
-// 		newValue = currentDial + amount
-// 	} else if isLeft {
-// 		newValue = currentDial - amount
-// 	} else {
-// 		log.Fatal(errors.New("number is neither left or right"))
-// 	}
-
-// 	if newValue < 0 {
-// 		newValue = int(math.Abs(float64(newValue)) - 100)
-// 	}
-
-// 	remainder := math.Mod(float64(newValue), 100)
-
-// 	return int(math.Abs(remainder))
-// }
-
-// func MoveDial(currentDial int, isLeft bool, isRight bool, distance int) int {
-// 	newValue := 0
-
-// 	if isRight {
-// 		newValue = currentDial + distance
-// 	} else if isLeft {
-// 		newValue = currentDial - distance
-// 	} else {
-// 		log.Fatal(errors.New("number is neither left or right"))
-// 	}
-
-// 	if newValue < 0 {
-// 		return int(100 - math.Abs(math.Mod(float64(newValue), 100)))
-// 		// newValue = int(math.Abs(float64(newValue)) - 100)
-// 	} else {
-// 		remainder := math.Mod(float64(newValue), 100)
-// 		return int(math.Abs(remainder))
-// 	}
-// }
-
-func DecodeLine(input string) (isLeft bool, isRight bool, amount int) {
-	amountString, isLeft := strings.CutPrefix(input, "L")
-	if !isLeft {
-		amountString, isRight = strings.CutPrefix(input, "R")
-	}
-
-	if !isLeft && !isRight {
-		log.Fatal(errors.New("failed to decode"))
-	}
-
-	amount, err := strconv.Atoi(amountString)
-	if err != nil {
-		log.Fatal("Failed")
-	}
-
-	return
-}
+// Part-1 Answer: 1059
+// Part-2 Answer: 6305
