@@ -5,28 +5,100 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Day 1",
+            "name": "Day 01",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day1",
-            "program": "${workspaceFolder}/day1/main.go"
+            "cwd": "${workspaceFolder}/day01",
+            "program": "${workspaceFolder}/day01/main.go"
         },
         {
-            "name": "Day 2",
+            "name": "Day 02",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day2",
-            "program": "${workspaceFolder}/day2/main.go"
+            "cwd": "${workspaceFolder}/day02",
+            "program": "${workspaceFolder}/day02/main.go"
         },
         {
-            "name": "Day 3",
+            "name": "Day 03",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day3",
-            "program": "${workspaceFolder}/day3/main.go"
-        }
+            "cwd": "${workspaceFolder}/day03",
+            "program": "${workspaceFolder}/day03/main.go"
+        },
+        {
+            "name": "Day 04",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day04",
+            "program": "${workspaceFolder}/day04/main.go"
+        },
+        {
+            "name": "Day 05",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day05",
+            "program": "${workspaceFolder}/day05/main.go"
+        },
+        {
+            "name": "Day 06",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day06",
+            "program": "${workspaceFolder}/day06/main.go"
+        },
+        {
+            "name": "Day 07",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day07",
+            "program": "${workspaceFolder}/day07/main.go"
+        },
+        {
+            "name": "Day 08",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day08",
+            "program": "${workspaceFolder}/day08/main.go"
+        },
+        {
+            "name": "Day 09",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day09",
+            "program": "${workspaceFolder}/day09/main.go"
+        },
+        {
+            "name": "Day 10",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day10",
+            "program": "${workspaceFolder}/day10/main.go"
+        },
+        {
+            "name": "Day 11",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day11",
+            "program": "${workspaceFolder}/day11/main.go"
+        },
+        {
+            "name": "Day 12",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day12",
+            "program": "${workspaceFolder}/day12/main.go"
+        }        
     ]
 }
