@@ -29,76 +29,148 @@
             "program": "${workspaceFolder}/day03/main.go"
         },
         {
-            "name": "Day 04",
+            "name": "Day 04: Part 1",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day04",
-            "program": "${workspaceFolder}/day04/main.go"
+            "cwd": "${workspaceFolder}/day04/part1",
+            "program": "${workspaceFolder}/day04/part1/main.go"
         },
         {
-            "name": "Day 05",
+            "name": "Day 04: Part 2",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day05",
-            "program": "${workspaceFolder}/day05/main.go"
+            "cwd": "${workspaceFolder}/day04/part2",
+            "program": "${workspaceFolder}/day04/part2/main.go"
         },
         {
-            "name": "Day 06",
+            "name": "Day 05: Part 1",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day06",
-            "program": "${workspaceFolder}/day06/main.go"
+            "cwd": "${workspaceFolder}/day05/part1",
+            "program": "${workspaceFolder}/day05/part1/main.go"
         },
         {
-            "name": "Day 07",
+            "name": "Day 05: Part 2",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day07",
-            "program": "${workspaceFolder}/day07/main.go"
+            "cwd": "${workspaceFolder}/day05/part2",
+            "program": "${workspaceFolder}/day05/part2/main.go"
         },
         {
-            "name": "Day 08",
+            "name": "Day 06: Part 1",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day08",
-            "program": "${workspaceFolder}/day08/main.go"
+            "cwd": "${workspaceFolder}/day06/part1",
+            "program": "${workspaceFolder}/day06/part1/main.go"
         },
         {
-            "name": "Day 09",
+            "name": "Day 06: Part 2",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day09",
-            "program": "${workspaceFolder}/day09/main.go"
+            "cwd": "${workspaceFolder}/day06/part2",
+            "program": "${workspaceFolder}/day06/part2/main.go"
         },
         {
-            "name": "Day 10",
+            "name": "Day 07: Part 1",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day10",
-            "program": "${workspaceFolder}/day10/main.go"
+            "cwd": "${workspaceFolder}/day07/part1",
+            "program": "${workspaceFolder}/day07/part1/main.go"
         },
         {
-            "name": "Day 11",
+            "name": "Day 07: Part 2",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day11",
-            "program": "${workspaceFolder}/day11/main.go"
+            "cwd": "${workspaceFolder}/day07/part2",
+            "program": "${workspaceFolder}/day07/part2/main.go"
         },
         {
-            "name": "Day 12",
+            "name": "Day 08: Part 1",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "cwd": "${workspaceFolder}/day12",
-            "program": "${workspaceFolder}/day12/main.go"
-        }        
+            "cwd": "${workspaceFolder}/day08/part1",
+            "program": "${workspaceFolder}/day08/part1/main.go"
+        },
+        {
+            "name": "Day 08: Part 2",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day08/part2",
+            "program": "${workspaceFolder}/day08/part2/main.go"
+        },
+        {
+            "name": "Day 09: Part 1",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day09/part1",
+            "program": "${workspaceFolder}/day09/part1/main.go"
+        },
+        {
+            "name": "Day 09: Part 2",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day09/part2",
+            "program": "${workspaceFolder}/day09/part2/main.go"
+        },
+        {
+            "name": "Day 10: Part 1",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day10/part1",
+            "program": "${workspaceFolder}/day10/part1/main.go"
+        },
+        {
+            "name": "Day 10: Part 2",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day10/part2",
+            "program": "${workspaceFolder}/day10/part2/main.go"
+        },
+        {
+            "name": "Day 11: Part 1",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day11/part1",
+            "program": "${workspaceFolder}/day11/part1/main.go"
+        },
+        {
+            "name": "Day 11: Part 2",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day11/part2",
+            "program": "${workspaceFolder}/day11/part2/main.go"
+        },
+        {
+            "name": "Day 12: Part 1",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day12/part1",
+            "program": "${workspaceFolder}/day12/part1/main.go"
+        },
+        {
+            "name": "Day 12: Part 2",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "cwd": "${workspaceFolder}/day12/part2",
+            "program": "${workspaceFolder}/day12/part2/main.go"
+        }
     ]
 }
